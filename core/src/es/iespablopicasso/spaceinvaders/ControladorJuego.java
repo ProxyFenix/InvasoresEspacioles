@@ -73,7 +73,32 @@ public class ControladorJuego {
 
     //El controlador tendrá que saber que pasa cuando hay que pintarse
     public void render() {
+        ///Realizo el control de estado
+        this.controlEstado();
 
+        //borramos imagenes previas
+        Gdx.gl.glClearColor(v:0, v1:0, v2:0, v3:1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        //Zona de pruebas, la nave es inestable, revienta. Random r = new Random();
+        //if (r.nextInt(100)=1) nave.explota()
+
+        if (estadoJuego == 1) {
+            //Escena de fondo
+            escena.render(batch);
+            //Renderizar imagenes
+            xwing.pintarse(batch);
+            //Pintar enemigos
+            empire.pintarse(batch);
+            //Pintar diparos aliados
+            disparosAliados.pintarse(batch);
+            //Pintar disparos enemigos
+            disparosEmpire.pintarse(batch);
+        }
+        else {
+            //Pantalla inicial
+            dibujarPantallaInicial();
+        }
 
 
     }
@@ -89,13 +114,40 @@ public class ControladorJuego {
 
     //Método de control del estado. Es interno. Para ayudar al método render
     private void controlEstado() {
-
+        if (estadoJuego == 0)
+        {
+            controlEstadoPantallaInicio();
+        }
+        else {
+            controlEstadoJugando();
+        }
     }
 
     //Método de control del estado cuando jugamos.
     private void controlEstadoJugando() {
 
+    DisparoEnemigo disparo;
 
+    //Actualizo el teclado
+        boolean recienTocado;
+
+        recienTocado = Gdx.input.justTouched();
+        if (recienTocado) {
+            et.simulaTeclado(Gdx.input.getX(), Gdx.input.getY());
+            if (et.isTeclaArriba()){
+                disparosAliados.crearDisparo(xwing.getPosX(), xwing.getPosY());
+            }
+        }
+
+        //Animamos el parallax
+        escena.animar();
+
+        //Movemos la nave
+        xwing.moverse(et); //Segun el teclado
+
+        //Movemos las naves eemigas
+        empire.moverseEnArmonia();
+        
 
 
 
@@ -106,7 +158,6 @@ public class ControladorJuego {
     }
 
     private void controlEstadoPantallaInicio() {
-
 
     }
 
