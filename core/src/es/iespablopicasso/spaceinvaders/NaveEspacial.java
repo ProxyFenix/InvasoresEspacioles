@@ -66,7 +66,7 @@ public class NaveEspacial extends ObjetoVolador {
     //texture disponible
     @Override
     public void dispose() {
-
+        super.dispose();
     }
 
     public void explota() {

@@ -152,13 +152,6 @@ public class ControladorJuego {
         //Movemos las naves eemigas
         empire.moverseEnArmonia();
 
-
-
-
-
-
-
-
     }
 
     private void controlEstadoPantallaInicio() {
