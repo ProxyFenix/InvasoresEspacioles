@@ -67,7 +67,7 @@ public class NavesEnemigas extends NaveEspacial {
     //orden de movimiento vertical
     public void avanzar() {
 
-        for (iPasos <= MAX_PASOS)
+        while (iPasos <= MAX_PASOS)
         {
             iPasos++;
         }
