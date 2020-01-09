@@ -54,42 +54,67 @@ public class NavesEnemigas extends NaveEspacial {
     //vamos a movernos automático
     public void moverseauto() {
 
+        //si llega a la mitad,
+        if (iPasos < MAX_PASOS/2)
+        {
+            posX += velX;
+        }
+        else
+        {
+            posX -= velX;
+        }
+
+        if (iPasos > MAX_PASOS/2 || iPasos == MAX_PASOS)
+        {
+            posY += velY;
+        }
 
     }
 
     //Con estos dos movimientos, las naves no son independientes, se dejan "ordenar" por su escuadrón
     //orden de movimiento horizontal
     public void desplazarnos(boolean bDerecha) {
-
+        if (bDerecha)
+        {
+            posX += velX;
+        }
+        else
+        {
+            posX -= velX;
+        }
 
     }
 
     //orden de movimiento vertical
     public void avanzar() {
-
-        while (iPasos <= MAX_PASOS)
-        {
-            iPasos++;
-        }
-        if (iPasos == MAX_PASOS)
-        {
-            posY = posY - 100;
-            iPasos = 0;
-        }
-
+        posY += velY;
     }
 
 
     //Sobreescribimos pintarse para que maneje dos sprites en vez de uno
     @Override
     public void pintarse(SpriteBatch miSB) {
+        Texture temporal;
+
+        iPasos++;
+
+        if (iPasos < TASA_CAMBIO_SPRITE/2)
+        {
+            temporal = img;
+            img = img2 ;
+            img2 = temporal;
+        }
+        else
+        {
+            super.pintarse(miSB);
+        }
 
     }
 
     //Sobreescribimos dispose para eliminar nuestro segundo sprite/texture
     @Override
     public void dispose() {
-
+        super.dispose();
     }
 
 }

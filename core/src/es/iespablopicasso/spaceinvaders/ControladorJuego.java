@@ -176,21 +176,6 @@ public class ControladorJuego {
         }
     }
 
-    //Al principio, y cada vez que recomencemos la partida, se reinician los objetos
-    private void inicializarObjetos() {
-
-
-
-    }
-
-    private void dibujarPantallaInicial() {
-
-    }
-}
-
-    private void controlEstadoPantallaInicio() {
-
-    }
 
     //Al principio, y cada vez que recomencemos la partida, se reinician los objetos
     private void inicializarObjetos() {
