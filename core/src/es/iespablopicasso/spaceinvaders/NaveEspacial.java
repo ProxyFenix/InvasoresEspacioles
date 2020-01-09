@@ -48,7 +48,18 @@ public class NaveEspacial extends ObjetoVolador {
     //Modificamos el método pintarse, para que en caso de necesitar pintar una explosión, lo haga
     @Override
     public void pintarse(SpriteBatch miSB) {
-
+        if (explotar){
+            pasos++;
+            if (pasos < PASOS_EXP){
+                miSB.begin();
+                miSB.draw(imgExplosion,posX - anchoDiv2, posY - altoDiv2);
+                miSB.end();
+            }
+            else
+            {
+                super.pintarse(miSB);
+            }
+        }
     }
 
     //Modificamos el método de liberación de recursos para que tenga en cuenta la nueva
@@ -59,6 +70,5 @@ public class NaveEspacial extends ObjetoVolador {
     }
 
     public void explota() {
-
     }
 }

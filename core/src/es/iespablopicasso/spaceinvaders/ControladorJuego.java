@@ -77,7 +77,7 @@ public class ControladorJuego {
         this.controlEstado();
 
         //borramos imagenes previas
-        Gdx.gl.glClearColor(v:0, v1:0, v2:0, v3:1);
+        Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         //Zona de pruebas, la nave es inestable, revienta. Random r = new Random();
@@ -106,7 +106,10 @@ public class ControladorJuego {
     //El controlador tendrá que saber como finalizar y cerrar recursos
     public void dispose() {
         //aquí tengo que liberar los objetos que integren texturas y también al batch de dibujo
-
+        if (batch!=null)
+        {
+            batch.dispose();
+        }
 
 
 
@@ -126,9 +129,9 @@ public class ControladorJuego {
     //Método de control del estado cuando jugamos.
     private void controlEstadoJugando() {
 
-    DisparoEnemigo disparo;
+        DisparoEnemigo disparo;
 
-    //Actualizo el teclado
+        //Actualizo el teclado
         boolean recienTocado;
 
         recienTocado = Gdx.input.justTouched();
@@ -137,6 +140,7 @@ public class ControladorJuego {
             if (et.isTeclaArriba()){
                 disparosAliados.crearDisparo(xwing.getPosX(), xwing.getPosY());
             }
+
         }
 
         //Animamos el parallax
@@ -156,6 +160,33 @@ public class ControladorJuego {
 
 
     }
+
+    private void controlEstadoPantallaInicio() {
+
+        boolean recienTocado;
+
+        recienTocado = Gdx.input.justTouched();
+        if (recienTocado) {
+            et.simulaTeclado(Gdx.input.getX(), Gdx.input.getY());
+            if (et.isTeclaArriba()){
+                estadoJuego = PANTALLA_JUEGO;
+                this.dispose();
+                inicializarObjetos();
+            }
+        }
+    }
+
+    //Al principio, y cada vez que recomencemos la partida, se reinician los objetos
+    private void inicializarObjetos() {
+
+
+
+    }
+
+    private void dibujarPantallaInicial() {
+
+    }
+}
 
     private void controlEstadoPantallaInicio() {
 

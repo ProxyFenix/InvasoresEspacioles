@@ -71,11 +71,11 @@ public class NavesEnemigas extends NaveEspacial {
         {
             iPasos++;
         }
-            if (iPasos == MAX_PASOS)
-            {
-                posY = posY - 100;
-                iPasos = 0;
-            }
+        if (iPasos == MAX_PASOS)
+        {
+            posY = posY - 100;
+            iPasos = 0;
+        }
 
     }
 
