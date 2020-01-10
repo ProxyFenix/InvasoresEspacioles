@@ -35,7 +35,12 @@ public class Fondo {
 
     //CONSTRUCTOR/ES
     public Fondo(String fichero, int velImagenX, int velImagenY, int posIniX, int posIniY, int anV, int alV) {
-
+        velImagenX = velocidadX;
+        velImagenY = velocidadY;
+        posIniX = posX;
+        posIniY = posY;
+        anV = ancho;
+        alV = alto;
 
 
 
@@ -46,7 +51,7 @@ public class Fondo {
 
     //método para avanzar la cámara
     public void avanzar() {
-
+        posY += velocidadY;
 
     }
 

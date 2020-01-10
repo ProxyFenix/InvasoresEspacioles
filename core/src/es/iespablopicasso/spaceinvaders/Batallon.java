@@ -31,7 +31,8 @@ public class Batallon {
 
     //CONSTRUCTORES
     public Batallon(int ancho, int alto) {
-
+        ancho = anchoPant;
+        alto = altoPant;
 
     }
 

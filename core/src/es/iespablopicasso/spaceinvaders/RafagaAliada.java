@@ -31,7 +31,7 @@ public class RafagaAliada {
 
     //CONSTRUCTORES
     public RafagaAliada(int alto) {
-
+        alto = altoPant;
     }
 
 

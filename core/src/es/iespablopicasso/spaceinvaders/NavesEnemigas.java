@@ -40,12 +40,14 @@ public class NavesEnemigas extends NaveEspacial {
 
     //CONSTRUCTORES
     public NavesEnemigas() {
-
+        img2 = null;
+        iPasos = 0;
 
     }
 
     public NavesEnemigas(float nuevaPosX,float nuevaPosY) {
-
+        nuevaPosX = posX;
+        nuevaPosY = posY;
     }
 
 

@@ -62,7 +62,7 @@ public class ControladorJuego {
 
     //El constructor creará a su vez: personajes iniciales y fondo
     public ControladorJuego() {
-
+        estadoJuego = 0;
 
 
     }

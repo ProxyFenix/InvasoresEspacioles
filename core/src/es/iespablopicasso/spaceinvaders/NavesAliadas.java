@@ -32,11 +32,13 @@ public class NavesAliadas extends NaveEspacial {
 
     //CONSTRUCTORES
     public NavesAliadas() {
-
+        anchoPant = 0;
     }
 
     public NavesAliadas(float nuevaPosX,float nuevaPosY, short anchoPantalla) {
-
+        nuevaPosX = posX;
+        nuevaPosY = posY;
+        anchoPantalla = anchoPant;
     }
 
 

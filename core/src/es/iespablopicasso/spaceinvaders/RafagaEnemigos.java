@@ -36,7 +36,7 @@ public class RafagaEnemigos {
 
     //CONSTRUCTORES
     public RafagaEnemigos(int alto) {
-
+        alto = altoPant;
     }
 
 

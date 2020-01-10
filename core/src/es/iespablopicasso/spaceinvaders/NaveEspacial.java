@@ -36,11 +36,18 @@ public class NaveEspacial extends ObjetoVolador {
 
     //CONSTRUCTORES
     public NaveEspacial() {
-
+        imgExplosion = null;
+        explotar = false;
+        pasos = 0;
     }
 
     public NaveEspacial(float nuevaPosX,float nuevaPosY,float nuevaVelX, float nuevaVelY,String nombreImg,String explosionString) {
-
+        nuevaPosX = posX;
+        nuevaPosY = posY;
+        nuevaVelX = velX;
+        nuevaVelY = velY;
+        nombreImg = "navealiada1.png";
+        explosionString = "explosion.png";
     }
 
     //Resto de comportamiento
