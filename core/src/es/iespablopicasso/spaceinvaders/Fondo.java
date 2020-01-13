@@ -1,3 +1,5 @@
+package es.iespablopicasso.spaceinvaders;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -34,7 +36,7 @@ public class Fondo {
     //CONSTRUCTOR/ES
     public Fondo(String fichero, int velImagenX, int velImagenY, int posIniX, int posIniY, int anV, int alV) {
 
-        fichero="D:\\COSAS DEL CICLO ELECTRIC BOGALOO\\PROGRAMACION\\spaceinvaders_hueco\\android\\assets";
+        imgFondo = new Texture(fichero);
         velImagenY=velocidadY;
         velImagenX=velocidadX;
         posIniX=posX;
