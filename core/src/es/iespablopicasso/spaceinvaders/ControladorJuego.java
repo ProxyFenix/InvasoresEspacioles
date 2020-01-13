@@ -2,6 +2,7 @@ package es.iespablopicasso.spaceinvaders;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.Random;
@@ -62,8 +63,20 @@ public class ControladorJuego {
 
     //El constructor creará a su vez: personajes iniciales y fondo
     public ControladorJuego() {
-        estadoJuego = 0;
+        //calcular ancho y alto
+        int alto,ancho;
 
+        alto = Gdx.graphics.getHeight();
+        ancho = Gdx.graphics.getWidth();
+
+        estadoJuego = PANTALLA_INICIO;
+        escena = new ParallaxEscena();
+        batch = new SpriteBatch();
+        xwing = new NavesAliadas();
+        et = new EstadoTeclado(ancho,alto);
+        empire = new Batallon(ancho,alto);
+        disparosAliados = new RafagaAliada(alto);
+        disparosEmpire = new RafagaEnemigos(alto);
 
     }
 
@@ -83,7 +96,7 @@ public class ControladorJuego {
         //Zona de pruebas, la nave es inestable, revienta. Random r = new Random();
         //if (r.nextInt(100)=1) nave.explota()
 
-        if (estadoJuego == 1) {
+        if (estadoJuego == PANTALLA_JUEGO) {
             //Escena de fondo
             escena.render(batch);
             //Renderizar imagenes
@@ -117,7 +130,7 @@ public class ControladorJuego {
 
     //Método de control del estado. Es interno. Para ayudar al método render
     private void controlEstado() {
-        if (estadoJuego == 0)
+        if (estadoJuego == PANTALLA_INICIO)
         {
             controlEstadoPantallaInicio();
         }
