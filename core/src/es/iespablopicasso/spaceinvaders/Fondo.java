@@ -1,5 +1,3 @@
-package es.iespablopicasso.spaceinvaders;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -35,12 +33,14 @@ public class Fondo {
 
     //CONSTRUCTOR/ES
     public Fondo(String fichero, int velImagenX, int velImagenY, int posIniX, int posIniY, int anV, int alV) {
-        velImagenX = velocidadX;
-        velImagenY = velocidadY;
-        posIniX = posX;
-        posIniY = posY;
-        anV = ancho;
-        alV = alto;
+
+        fichero="D:\\COSAS DEL CICLO ELECTRIC BOGALOO\\PROGRAMACION\\spaceinvaders_hueco\\android\\assets";
+        velImagenY=velocidadY;
+        velImagenX=velocidadX;
+        posIniX=posX;
+        posIniY=posY;
+        anV=ancho;
+        alV=alto;
 
 
 
@@ -51,21 +51,29 @@ public class Fondo {
 
     //método para avanzar la cámara
     public void avanzar() {
-        posY += velocidadY;
+
+        if (posY<altoVentana*2){
+            posY=0;
+        }
+        posY+=velocidadY;
+
 
     }
 
     //Comportamiento para pintar la ventana del fondo a utilizar
     public void pintate(SpriteBatch miSB) {
-        TextureRegion ventana;
 
+        TextureRegion ventana;
+        miSB.begin();
+        miSB.draw(imgFondo,posX,posY,velocidadX,velocidadY);
+        miSB.end();
 
     }
 
 
     //Método para liberar recursos
     public void dispose() {
-
+        imgFondo.dispose();
     }
 
 
