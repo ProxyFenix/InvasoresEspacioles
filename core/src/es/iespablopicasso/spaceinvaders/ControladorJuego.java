@@ -65,8 +65,6 @@ public class ControladorJuego {
     public ControladorJuego() {
         //calcular ancho y alto
 
-
-        estadoJuego = PANTALLA_INICIO;
         int alto,ancho;
 
         alto = Gdx.graphics.getHeight();
