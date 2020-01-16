@@ -41,12 +41,14 @@ public class RafagaAliada {
     public void crearDisparo(float posX,float posY) {
 
 
+
     }
 
     //Método pintarse
     public void pintarse(SpriteBatch miSB) {
+        miSB.begin();
 
-
+        miSB.end();
     }
 
 
@@ -54,8 +56,6 @@ public class RafagaAliada {
     //Si el primer disparo (es el único que puede traspasar la frontera superior de la pantalla)
     //se sale, hay que eliminarlo
     public void moverse() {
-
-
     }
 
     //Método dispose. Para eliminar los recursos

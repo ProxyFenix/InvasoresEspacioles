@@ -64,12 +64,13 @@ public class ControladorJuego {
     //El constructor creará a su vez: personajes iniciales y fondo
     public ControladorJuego() {
         //calcular ancho y alto
+
+
+        estadoJuego = PANTALLA_INICIO;
         int alto,ancho;
 
         alto = Gdx.graphics.getHeight();
         ancho = Gdx.graphics.getWidth();
-
-        estadoJuego = PANTALLA_INICIO;
         escena = new ParallaxEscena();
         batch = new SpriteBatch();
         xwing = new NavesAliadas();
@@ -162,7 +163,7 @@ public class ControladorJuego {
         //Movemos la nave
         xwing.moverse(et); //Segun el teclado
 
-        //Movemos las naves eemigas
+        //Movemos las naves enemigas
         empire.moverseEnArmonia();
 
     }
@@ -185,12 +186,22 @@ public class ControladorJuego {
 
     //Al principio, y cada vez que recomencemos la partida, se reinician los objetos
     private void inicializarObjetos() {
+        int alto,ancho;
 
-
+        alto = Gdx.graphics.getHeight();
+        ancho = Gdx.graphics.getWidth();
+        escena = new ParallaxEscena();
+        batch = new SpriteBatch();
+        xwing = new NavesAliadas();
+        et = new EstadoTeclado(ancho,alto);
+        empire = new Batallon(ancho,alto);
+        disparosAliados = new RafagaAliada(alto);
+        disparosEmpire = new RafagaEnemigos(alto);
 
     }
 
     private void dibujarPantallaInicial() {
+        escena.render(batch);
 
     }
 }

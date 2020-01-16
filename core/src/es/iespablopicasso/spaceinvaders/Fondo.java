@@ -54,10 +54,10 @@ public class Fondo {
     //método para avanzar la cámara
     public void avanzar() {
 
+        posY += velocidadY;
         if (posY<altoVentana*2){
             posY=0;
         }
-        posY+=velocidadY;
 
 
     }
@@ -65,13 +65,12 @@ public class Fondo {
     //Comportamiento para pintar la ventana del fondo a utilizar
     public void pintate(SpriteBatch miSB) {
 
-        TextureRegion ventana;
+
         miSB.begin();
-        miSB.draw(imgFondo,posX,posY,velocidadX,velocidadY);
+        miSB.draw(imgFondo,posX,posY);
         miSB.end();
 
     }
-
 
     //Método para liberar recursos
     public void dispose() {

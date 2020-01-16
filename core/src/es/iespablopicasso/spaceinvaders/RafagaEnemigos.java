@@ -51,7 +51,9 @@ public class RafagaEnemigos {
 
     //Método pintarse
     public void pintarse(SpriteBatch miSB) {
+        miSB.begin();
 
+        miSB.end();
 
     }
 

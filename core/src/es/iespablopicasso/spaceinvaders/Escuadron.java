@@ -46,7 +46,8 @@ public class Escuadron {
 
     //CONSTRUCTORES
     public Escuadron(short anchoPantalla, float posicionVert) {
-
+        anchoPant = anchoPantalla;
+        posVertical = posicionVert;
 
     }  //Fin de constructor
 
@@ -56,6 +57,8 @@ public class Escuadron {
 
     //Vamos a pintarnos
     public void pintarse(SpriteBatch miSB) {
+        miSB.begin();
+        miSB.end();
         //Tenemos simplemente que pintar cada uno de los elementos del escuadrón
 
 

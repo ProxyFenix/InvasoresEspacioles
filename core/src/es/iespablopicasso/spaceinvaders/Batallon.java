@@ -47,7 +47,6 @@ public class Batallon {
     //El comportamiento moverseEnArmonia le pide a los escuadrones que se muevan
     public void moverseEnArmonia() {
 
-
     }
 
     //Avanzar. Nos movemos todos hacia abajo.
