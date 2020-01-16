@@ -1,6 +1,8 @@
 package es.iespablopicasso.spaceinvaders;
 
 
+import com.badlogic.gdx.Gdx;
+
 /**
  * Clase EstadoTeclado. Representa un paquete de semáforos (booleanos) que codifican
  * el estado del teclado del videojuego. Se crea y envía como parámetro para que los

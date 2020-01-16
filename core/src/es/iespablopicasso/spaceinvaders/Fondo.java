@@ -1,5 +1,6 @@
 package es.iespablopicasso.spaceinvaders;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -65,9 +66,12 @@ public class Fondo {
     //Comportamiento para pintar la ventana del fondo a utilizar
     public void pintate(SpriteBatch miSB) {
 
-
+        int alto = Gdx.graphics.getHeight();
+        int ancho = Gdx.graphics.getWidth();
+        TextureRegion ventana;
+        ventana = new TextureRegion(imgFondo,0,0,628,1280);
         miSB.begin();
-        miSB.draw(imgFondo,posX,posY);
+        miSB.draw(ventana,posX,posY,ancho,alto);
         miSB.end();
 
     }
