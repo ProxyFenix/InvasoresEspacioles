@@ -200,6 +200,8 @@ public class ControladorJuego {
 
     private void dibujarPantallaInicial() {
         escena.render(batch);
+        xwing.pintarse(batch);
+        empire.pintarse(batch);
 
     }
 }
