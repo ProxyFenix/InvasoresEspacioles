@@ -1,7 +1,5 @@
 package es.iespablopicasso.spaceinvaders;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 /**
  * Clase NavesAliadas. Representa a una nave principal. Estas naves pueden disparar
  * y también explotan si colisionan, y son manejadas por jugadores a través del teclado
@@ -34,16 +32,23 @@ public class NavesAliadas extends NaveEspacial {
 
     //CONSTRUCTORES
     public NavesAliadas() {
-        anchoPant = 0;
+        super();
     }
 
-    public NavesAliadas(float nuevaPosX, float nuevaPosY, short anchoPantalla) {
-        nuevaPosX = posX;
-        nuevaPosY = posY;
-        anchoPantalla = anchoPant;
+    public NavesAliadas(float nuevaPosX,float nuevaPosY, short anchoPantalla) {
+        super(nuevaPosX, nuevaPosY, VELOCIDAD_INICIAL_X, VELOCIDAD_INICIAL_Y, NOMBRE_SPRITE, NOMBRE_SPRITE_EXP);
+        anchoPant = anchoPantalla;
     }
 
 
     //Resto de comportamiento
-    public void moverse(EstadoTeclado et) { }
+    public void moverse(EstadoTeclado et) {
+        //super.moverse();
+        if (et.isTeclaIzq() && posX > 0) {
+            posX -= velX;
+        }
+        if (et.isTeclaDer() && posX < this.anchoPant) {
+            posX += velX;
+        }
+    }
 }

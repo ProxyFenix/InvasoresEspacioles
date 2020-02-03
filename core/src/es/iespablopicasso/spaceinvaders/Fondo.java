@@ -1,6 +1,5 @@
 package es.iespablopicasso.spaceinvaders;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -37,14 +36,16 @@ public class Fondo {
     //CONSTRUCTOR/ES
     public Fondo(String fichero, int velImagenX, int velImagenY, int posIniX, int posIniY, int anV, int alV) {
 
-        imgFondo = new Texture(fichero);
-        velImagenY=velocidadY;
-        velImagenX=velocidadX;
-        posIniX=posX;
-        posIniY=posY;
-        anV=ancho;
-        alV=alto;
+        velocidadX = velImagenX;
+        velocidadY = velImagenY;
+        posX = posIniX;
+        posY = posIniY;
 
+        altoVentana = alV;
+        anchoVentana = anV;
+        imgFondo = new Texture(fichero);
+        ancho = imgFondo.getWidth();
+        alto = imgFondo.getHeight();
 
 
     }
@@ -55,26 +56,36 @@ public class Fondo {
     //método para avanzar la cámara
     public void avanzar() {
 
-        posY += velocidadY;
-        if (posY<altoVentana*2){
-            posY=0;
+        posX = posX + velocidadX;
+        posY = posY + velocidadY;
+        if (posX +anchoVentana >= ancho && velocidadX >0) {
+            //nos hemos pasado del final del fondo, volvemos al principio
+            posX = posX + anchoVentana - ancho;
         }
-
-
+        if (posX <=0 && velocidadX <0){
+            posX = ancho - anchoVentana;
+        }
+        if (posY +altoVentana >= alto && velocidadY >0) {
+            posY = posY + altoVentana - alto;
+        }
+        if (posY <=0 && velocidadY <0) {
+            posY = alto - altoVentana;
+        }
     }
 
     //Comportamiento para pintar la ventana del fondo a utilizar
     public void pintate(SpriteBatch miSB) {
-
-        int alto = Gdx.graphics.getHeight();
-        int ancho = Gdx.graphics.getWidth();
         TextureRegion ventana;
-        ventana = new TextureRegion(imgFondo,0,0,628,1280);
+
+        ventana = new TextureRegion(imgFondo,posX,posY,anchoVentana,altoVentana);
+
         miSB.begin();
-        miSB.draw(ventana,posX,posY,ancho,alto);
+        miSB.draw(ventana,0,0);
+        //miSB.draw(imgFondo,0,0,anchoVentana,altoVentana);
         miSB.end();
 
     }
+
 
     //Método para liberar recursos
     public void dispose() {
@@ -83,11 +94,11 @@ public class Fondo {
 
 
     public int getAltoFondo() {
-        return 0;
+        return (int)imgFondo.getHeight();
     }
 
     public int getAnchoFondo() {
-        return 0;
+        return (int)imgFondo.getWidth();
     }
 }
 

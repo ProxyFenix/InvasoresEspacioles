@@ -40,14 +40,16 @@ public class NavesEnemigas extends NaveEspacial {
 
     //CONSTRUCTORES
     public NavesEnemigas() {
-        img2 = null;
-        iPasos = 0;
 
+        super();
+        img2 = null;
+        iPasos =0;
     }
 
     public NavesEnemigas(float nuevaPosX,float nuevaPosY) {
-        nuevaPosX = posX;
-        nuevaPosY = posY;
+        super(nuevaPosX, nuevaPosY, VELOCIDAD_INICIAL_X, VELOCIDAD_INICIAL_Y, NOMBRE_SPRITE, NOMBRE_SPRITE_EXP);
+        img2 = new Texture(NOMBRE_SPRITE_2);
+        iPasos = 0;
     }
 
 
@@ -55,19 +57,13 @@ public class NavesEnemigas extends NaveEspacial {
 
     //vamos a movernos automático
     public void moverseauto() {
-
-        //si llega a la mitad,
         if (iPasos < MAX_PASOS/2)
-        {
-            posX += velX;
-        }
-        else
-        {
             posX -= velX;
-        }
+        else
+            posX += velX;
 
-        if (iPasos > MAX_PASOS/2 || iPasos == MAX_PASOS)
-        {
+        if (iPasos == MAX_PASOS/2 || iPasos == MAX_PASOS) {
+
             posY += velY;
         }
 
@@ -77,13 +73,9 @@ public class NavesEnemigas extends NaveEspacial {
     //orden de movimiento horizontal
     public void desplazarnos(boolean bDerecha) {
         if (bDerecha)
-        {
             posX += velX;
-        }
         else
-        {
             posX -= velX;
-        }
 
     }
 
@@ -100,23 +92,27 @@ public class NavesEnemigas extends NaveEspacial {
 
         iPasos++;
 
-        if (iPasos < TASA_CAMBIO_SPRITE/2)
-        {
+        if (iPasos % TASA_CAMBIO_SPRITE == 0) {
             temporal = img;
-            img = img2 ;
+            img = img2;
             img2 = temporal;
         }
-        else
-        {
-            super.pintarse(miSB);
-        }
+        super.pintarse(miSB);
 
+        if (iPasos == MAX_PASOS) {
+            iPasos = 0;
+        }
     }
 
     //Sobreescribimos dispose para eliminar nuestro segundo sprite/texture
     @Override
     public void dispose() {
         super.dispose();
+        if (img2 != null) img2.dispose();
     }
 
+    //Método disparar. Nos piden un objeto disparo que será almacenado después por otro
+    //objeto contenedor de disparos
+    //public DisparosEnemigos disparar() {
+    //}
 }

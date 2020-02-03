@@ -1,8 +1,6 @@
 package es.iespablopicasso.spaceinvaders;
 
 
-import com.badlogic.gdx.Gdx;
-
 /**
  * Clase EstadoTeclado. Representa un paquete de semáforos (booleanos) que codifican
  * el estado del teclado del videojuego. Se crea y envía como parámetro para que los
@@ -68,22 +66,24 @@ public class EstadoTeclado {
     //nos han pulsado la pantalla en posX,posY. Simulamos el equivalente en teclas
     public void simulaTeclado(int posX, int posY) {
 
-        if (posY > limiteAlturaZonaArriba){
+        if (posY < limiteAlturaZonaArriba)
             teclaArriba = true;
-        }
-        else if (posX <= limiteAnchoZonaLateral){
-            teclaAbajo = false;
-            teclaDer = false;
-            teclaIzq = true;
-        }
-        else if (posX <= ancho - limiteAnchoZonaLateral){
-            teclaAbajo = true;
-            teclaDer = true;
-            teclaIzq = false;
-        }
         else {
-            teclaAbajo = true;
+            teclaArriba = false;
+
+
+            if (posX < limiteAnchoZonaLateral) {
+                teclaIzq = !teclaIzq;
+                teclaDer = false;
+            } else if (posX >= ancho - limiteAnchoZonaLateral) {
+                teclaDer = !teclaDer;
+                teclaIzq = false;
+            } else {
+                teclaDer = false;
+                teclaIzq = false;
+            }
         }
+
 
 
     }

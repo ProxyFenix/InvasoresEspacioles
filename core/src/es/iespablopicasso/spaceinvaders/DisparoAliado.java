@@ -1,7 +1,5 @@
 package es.iespablopicasso.spaceinvaders;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 /**
  * Clase DisparoAliado. Representa a uno de nuestros disparos
  */
@@ -31,49 +29,8 @@ public class DisparoAliado extends ObjetoVolador {
 
     //CONSTRUCTORES
     public DisparoAliado(float nuevaPosX,float nuevaPosY) {
-        nuevaPosX = posX;
-        nuevaPosY = posY;
+        super(nuevaPosX,nuevaPosY,VELOCIDAD_INICIAL_X,VELOCIDAD_INICIAL_Y,NOMBRE_SPRITE);
     }
 
-
-//Resto de comportamiento
-
-    @Override
-    public void pintarse(SpriteBatch miSB) {
-        super.pintarse(miSB);
-    }
-
-    @Override
-    public void moverse() {
-        super.moverse();
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
-
-    @Override
-    public float getPosY() {
-        return super.getPosY();
-    }
-
-    @Override
-    public float getPosX() {
-        return super.getPosX();
-    }
-
-    public static float getVelocidadInicialY() {
-        return VELOCIDAD_INICIAL_Y;
-    }
-
-    public static float getVelocidadInicialX() {
-        return VELOCIDAD_INICIAL_X;
-    }
-
-    @Override
-    public boolean colisiona(ObjetoVolador otro) {
-        return super.colisiona(otro);
-    }
-
+    //Resto de comportamiento
 }

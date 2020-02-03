@@ -3,8 +3,6 @@ package es.iespablopicasso.spaceinvaders;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import jdk.nashorn.internal.runtime.ConsString;
-
 /**
  * Clase NaveEspacial. Representa a una nave principal o enemiga. Estas naves pueden disparar
  * y también explotan si colisionan
@@ -36,18 +34,16 @@ public class NaveEspacial extends ObjetoVolador {
 
     //CONSTRUCTORES
     public NaveEspacial() {
+        super();
         imgExplosion = null;
         explotar = false;
         pasos = 0;
     }
 
     public NaveEspacial(float nuevaPosX,float nuevaPosY,float nuevaVelX, float nuevaVelY,String nombreImg,String explosionString) {
-        nuevaPosX = posX;
-        nuevaPosY = posY;
-        nuevaVelX = velX;
-        nuevaVelY = velY;
-        nombreImg = "navealiada1.png";
-        explosionString = "explosion.png";
+        super(nuevaPosX, nuevaPosY, nuevaVelX, nuevaVelY, nombreImg);
+        imgExplosion = new Texture(explosionString);
+        explotar = false;
     }
 
     //Resto de comportamiento
@@ -55,18 +51,15 @@ public class NaveEspacial extends ObjetoVolador {
     //Modificamos el método pintarse, para que en caso de necesitar pintar una explosión, lo haga
     @Override
     public void pintarse(SpriteBatch miSB) {
-
-        if (explotar){
+        if (explotar) {
             pasos++;
-            if (pasos < PASOS_EXP){
+            if (pasos < PASOS_EXP) {
                 miSB.begin();
-                miSB.draw(imgExplosion,posX - anchoDiv2, posY - altoDiv2);
+                miSB.draw(imgExplosion, posX - anchoDiv2, posY - altoDiv2);
                 miSB.end();
             }
-            else
-            {
-                super.pintarse(miSB);
-            }
+        } else {
+            super.pintarse(miSB);
         }
     }
 
@@ -75,11 +68,12 @@ public class NaveEspacial extends ObjetoVolador {
     @Override
     public void dispose() {
         super.dispose();
+        if (imgExplosion != null) imgExplosion.dispose();
     }
 
     public void explota() {
-        if super.colisiona(){
-            explotar = true;
-        }
+        explotar = true;
+        anchoDiv2 = imgExplosion.getWidth()/2.0f;
+        altoDiv2 = imgExplosion.getHeight()/2.0f;
     }
 }

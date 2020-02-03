@@ -2,10 +2,7 @@ package es.iespablopicasso.spaceinvaders;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import java.util.Random;
 
 /**
  * Clase que implementa el controlador de nuestro videojuego. Realizará la gestión de la entrada del teclado,
@@ -63,20 +60,12 @@ public class ControladorJuego {
 
     //El constructor creará a su vez: personajes iniciales y fondo
     public ControladorJuego() {
-        //calcular ancho y alto
 
-        int alto,ancho;
 
-        alto = Gdx.graphics.getHeight();
-        ancho = Gdx.graphics.getWidth();
-        escena = new ParallaxEscena();
-        batch = new SpriteBatch();
-        xwing = new NavesAliadas();
-        et = new EstadoTeclado(ancho,alto);
-        empire = new Batallon(ancho,alto);
-        disparosAliados = new RafagaAliada(alto);
-        disparosEmpire = new RafagaEnemigos(alto);
+        inicializarObjetos();
 
+
+        estadoJuego = PANTALLA_INICIO;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -85,55 +74,73 @@ public class ControladorJuego {
 
     //El controlador tendrá que saber que pasa cuando hay que pintarse
     public void render() {
-        ///Realizo el control de estado
+
+        //Primero realizo el control de estado.
         this.controlEstado();
 
-        //borramos imagenes previas
-        Gdx.gl.glClearColor(0,0,0,1);
+        //Borramos para eliminar imágenes previas
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //Zona de pruebas, la nave es inestable, revienta. Random r = new Random();
-        //if (r.nextInt(100)=1) nave.explota()
+        //////////Zona de pruebas
+        // Nuestra nave es inestable... y al final explota
+        //Random r = new Random();
+        //if (r.nextInt(100)==1)  xwing.explota();
 
-        if (estadoJuego == PANTALLA_JUEGO) {
+        if (estadoJuego == 1) {
             //Escena de fondo
             escena.render(batch);
-            //Renderizar imagenes
+
+            //renderizar imágenes
             xwing.pintarse(batch);
-            //Pintar enemigos
+
+            //Pintar el batallón enemigo
             empire.pintarse(batch);
-            //Pintar diparos aliados
+
+            //Pintar los disparos aliados
             disparosAliados.pintarse(batch);
-            //Pintar disparos enemigos
+
+            //Pintar los disparos enemigos
             disparosEmpire.pintarse(batch);
-        }
-        else {
+        } else {
             //Pantalla inicial
             dibujarPantallaInicial();
         }
-
 
     }
 
     //El controlador tendrá que saber como finalizar y cerrar recursos
     public void dispose() {
         //aquí tengo que liberar los objetos que integren texturas y también al batch de dibujo
-        if (batch!=null)
-        {
+
+        //batch de dibujo
+        if (batch != null) {
             batch.dispose();
         }
 
+        //Nave principal
+        xwing.dispose();
+
+        //Batallón
+        empire.dispose();
+
+        //Disparos propios
+        disparosAliados.dispose();
+
+        //Disparos enemigos
+        disparosEmpire.dispose();
+
+        //Fondo de pantalla
+        escena.dispose();
 
 
     }
 
     //Método de control del estado. Es interno. Para ayudar al método render
     private void controlEstado() {
-        if (estadoJuego == PANTALLA_INICIO)
-        {
+        if (estadoJuego == 0) {
             controlEstadoPantallaInicio();
-        }
-        else {
+        } else {
             controlEstadoJugando();
         }
     }
@@ -149,60 +156,110 @@ public class ControladorJuego {
         recienTocado = Gdx.input.justTouched();
         if (recienTocado) {
             et.simulaTeclado(Gdx.input.getX(), Gdx.input.getY());
-            if (et.isTeclaArriba()){
+            if (et.isTeclaArriba()) { //Tenemos que disparar
                 disparosAliados.crearDisparo(xwing.getPosX(), xwing.getPosY());
             }
-
         }
 
         //Animamos el parallax
         escena.animar();
 
+
         //Movemos la nave
-        xwing.moverse(et); //Segun el teclado
+        xwing.moverse(et); //nos movemos con respecto a lo que indiquen las teclas pulsadas
+
 
         //Movemos las naves enemigas
         empire.moverseEnArmonia();
 
+        if (Math.random() < TASA_DISPARO_ENEMIGOS) {
+            disparo = empire.disparar();
+            if (disparo != null)
+               disparosEmpire.crearDisparo(disparo);
+        }
+
+        //Movemos disparos aliados
+        disparosAliados.moverse();
+
+
+        //Movemos disparos enemigos
+        disparosEmpire.moverse();
+
+        //Calculamos colisiones
+
+        //Mis disparos contra mis enemigos
+        disparosAliados.calculaColisionesDisparos(empire);
+        if (empire.estaVacio()) {
+            //hemos ganado, mostrar msg
+
+            estadoJuego = PANTALLA_INICIO;
+
+        } else {
+            //Disparos enemigos contra mí
+            if (disparosEmpire.colisiona(xwing)) {
+                //Me mataron
+                xwing.explota();
+                //mostrar msg
+                estadoJuego = PANTALLA_INICIO;
+            }
+            //Enemigos contra mí
+            if (empire.colisiona(xwing)) {
+                //Me mataron
+                xwing.explota();
+                //mostrar msg
+                estadoJuego = PANTALLA_INICIO;
+            }
+        }
+
     }
 
     private void controlEstadoPantallaInicio() {
-
+        //Actualizo el teclado
         boolean recienTocado;
 
         recienTocado = Gdx.input.justTouched();
         if (recienTocado) {
             et.simulaTeclado(Gdx.input.getX(), Gdx.input.getY());
-            if (et.isTeclaArriba()){
+            if (et.isTeclaArriba()) { //Tenemos que disparar
                 estadoJuego = PANTALLA_JUEGO;
                 this.dispose();
                 inicializarObjetos();
+
             }
         }
-    }
 
+    }
 
     //Al principio, y cada vez que recomencemos la partida, se reinician los objetos
     private void inicializarObjetos() {
-        int alto,ancho;
-
-        alto = Gdx.graphics.getHeight();
-        ancho = Gdx.graphics.getWidth();
-        escena = new ParallaxEscena();
+        //Creamos el objeto batch para dibujar
         batch = new SpriteBatch();
-        xwing = new NavesAliadas();
-        et = new EstadoTeclado(ancho,alto);
-        empire = new Batallon(ancho,alto);
-        disparosAliados = new RafagaAliada(alto);
-        disparosEmpire = new RafagaEnemigos(alto);
 
+        //Parallax
+        escena = new ParallaxEscena();
+
+        //Creo el estado.
+        et = new EstadoTeclado(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        //Creo la nave principal
+        xwing = new NavesAliadas(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / INDICE_POSICION_XWING, (short) Gdx.graphics.getWidth());
+
+        //Creo el batallón
+        empire = new Batallon(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        //Ahora creo la RafagaAliada, estará vacía pero hay que crearla
+        disparosAliados = new RafagaAliada(Gdx.graphics.getHeight());
+
+        //Lo mismo con los disparos enemigos
+        disparosEmpire = new RafagaEnemigos(Gdx.graphics.getHeight());
     }
 
     private void dibujarPantallaInicial() {
-        escena.render(batch);
+        //renderizar imágenes
         xwing.pintarse(batch);
-        empire.pintarse(batch);
 
+        //Pintar el batallón enemigo
+        empire.pintarse(batch);
     }
 }
 

@@ -15,6 +15,12 @@ public class ParallaxEscena {
     //
     /////////////////////////////////////////////////////////////////////////////////////
 
+    private int tamVentanaX;  //La ventana es lo que cabe en la pantalla real
+    private int tamVentanaY;
+
+    private int tamEscenaX;  //Tamaño de la escena real, sobrepasará la ventana
+    private int tamEscenaY;
+
     private Fondo fondo1;
     private Fondo fondo2;
 
@@ -28,20 +34,19 @@ public class ParallaxEscena {
 
     //CONSTRUCTOR
     public  ParallaxEscena() {
-        int tamVentanaX;
-        int tamVentanaY;
 
         tamVentanaX = Gdx.graphics.getWidth();
         tamVentanaY = Gdx.graphics.getHeight();
         fondo1 = new Fondo(FILE_FONDO1, 0, -1, 0, 0, tamVentanaX, tamVentanaY);
         fondo2 = new Fondo(FILE_FONDO2, 0, -2, 0, 0, tamVentanaX, tamVentanaY);
+        tamEscenaY = fondo1.getAltoFondo();
+        tamEscenaX = fondo1.getAnchoFondo();
 
 
     }
 
     //RESTO DE MÉTODOS
 
-    //Vamos a avanzar la escena moviendo los dos fondos
     public void animar() {
 
         fondo1.avanzar();
@@ -50,7 +55,6 @@ public class ParallaxEscena {
 
     }
 
-    //pintamos los fondos
     public void render(SpriteBatch miSB) {
 
         fondo1.pintate(miSB);
@@ -59,7 +63,6 @@ public class ParallaxEscena {
 
     }
 
-    //liberamos recursos
     public void dispose() {
         fondo1.dispose();
         fondo2.dispose();
